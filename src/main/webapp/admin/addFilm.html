@@ -63,15 +63,16 @@
         $("#fm").form("submit",{
             url:"/admin/film/save",
             onSubmit:function(){
+                //通过ckeditor节点属性来获取data
                 var content=CKEDITOR.instances.content.getData();
                 if(content==""){
                     $.messager.alert("系统提示","内容不能为空！");
                     return false;
                 }
-                return $(this).form("validate");
-            },
-            success:function(result){
-                var result=eval('('+result+')');
+                return $(this).form("validate"); //validate require属性
+            }, //提交前进行验证
+            success:function(result){//执行成功后回调
+                var result = eval('('+result+')');//用eval将字符串转换为代码对象
                 if(result.success){
                     $.messager.alert("系统提示","保存成功！");
                     resetValue();
