@@ -17,6 +17,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 电影控制层
+ */
 @RestController  //将map键值对自动转换为json数组形式
 @RequestMapping("/admin/film")
 public class FilmAdminController {

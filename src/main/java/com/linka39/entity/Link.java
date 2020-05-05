@@ -17,6 +17,17 @@ public class Link {
     private  String name;   //名称
     @Column(length = 500)
     private String url; //地址
+
+    private Integer sort; // 排列序号
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
     public Integer getId() {
         return id;
     }
