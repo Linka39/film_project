@@ -4,6 +4,7 @@ import com.linka39.entity.Link;
 import com.linka39.repository.LinkRepository;
 import com.linka39.service.LinkService;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,7 +20,8 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public List<Link> list(Integer page, Integer pageSize) {
         //PageRequest不需要 new ，内部调用构造器
-        return linkRepository.findAll(PageRequest.of(page,pageSize)).getContent();//内部已经封装的分页方法
+        Sort sort = Sort.by(Sort.Direction.ASC, "sort");
+        return linkRepository.findAll(PageRequest.of(page,pageSize,sort)).getContent();//内部已经封装的分页方法
     }
 
     @Override
