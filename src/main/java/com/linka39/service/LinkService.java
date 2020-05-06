@@ -14,4 +14,14 @@ public interface LinkService {
 
     //获取总记录数
     public Long getCount();
+
+    /**
+     * 添加或者修改友情链接
+     */
+    public void save(Link link);
+    /**
+     * 删除友情链接
+     */
+    public void delete(Integer id);
+
 }

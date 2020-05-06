@@ -13,7 +13,8 @@
 <body style="margin: 2px">
 <!--fitColum 自动适应浏览器宽度-->
     <table id="dg" title="友情链接管理" class="easyui-datagrid"
-           fitColumns="true" pagination="true" rownumbers="true" url="/admin/link/list" fit="true">
+           fitColumns="true" pagination="true" rownumbers="true" url="/admin/link/list" fit="true"
+            toolbar="#tb">
      <!--   定义列头-->
         <thead>
             <tr>
@@ -25,41 +26,116 @@
             </tr>
         </thead>
     </table>
+<div id="tb">
+    <a href="javascript:openLinkAddDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>
+    <a href="javascript:openLinkModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改</a>
+    <a href="javascript:deleteLink()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+</div>
+<div id="dlg" class="easyui-dialog" style="width: 400px;height:200px;padding: 10px 20px"
+     closed="true" buttons="#dlg-buttons">
+    <form id="fm" method="post">
+        <table cellspacing="8px">
+            <tr>
+                <td>友情链接名称：</td>
+                <td>
+                    <input type="text" id="name" name="name" class="easyui-validatebox" required="true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>友情链接地址：</td>
+                <td>
+                    <input type="text" id="url" name="url" class="easyui-validatebox" validType="url" required="true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>友情链接排序：</td>
+                <td>
+                    <input type="text" id="sort" name="sort" class="easyui-numberbox" required="true" style="width: 60px"/>&nbsp;(序号从小到大排序)
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:saveLink()" class="easyui-linkbutton" iconCls="icon-ok" >保存</a>
+    <a href="javascript:closeLink()" class="easyui-linkbutton" iconCls="icon-cancel" >关闭</a>
+</div>
 </body>
 <script type="text/javascript">
-    CKEDITOR.replace("content");//实例化ckeditor
-
-    function submitData(){
-        $("#fm").form("submit",{
-            url:"/admin/film/save",
-            onSubmit:function(){
-                //通过ckeditor节点属性来获取data
-                var content=CKEDITOR.instances.content.getData();
-                if(content==""){
-                    $.messager.alert("系统提示","内容不能为空！");
-                    return false;
-                }
-                return $(this).form("validate"); //validate require属性
-            }, //提交前进行验证
-            success:function(result){//执行成功后回调
-                var result = eval('('+result+')');//用eval将字符串转换为代码对象
-                if(result.success){
-                    $.messager.alert("系统提示","保存成功！");
-                    resetValue();
-                }else{
-                    $.messager.alert("系统提示","保存失败！");
-                }
-
+    var url;
+    function openLinkAddDialog() {
+        //调用dialog内的方法
+        $("#dlg").dialog("open").dialog("setTitle","添加友情链接信息");
+        url="/admin/link/save";
+    }
+    function openLinkModifyDialog() {
+        var selectedRows = $("#dg").datagrid("getSelections");
+        if(selectedRows.length!=1){
+            $.messager.alert("系统提示","请选择一条要编辑的数据");
+            return;
+        }
+        var row = selectedRows[0];
+        $("#fm").form("load",row)//根据row里面的属性值自动匹配表单name
+        $("#dlg").dialog("open").dialog("setTitle","添加友情链接信息");
+        url="/admin/link/save?id="+row.id;
+    }
+    function deleteLink() {
+        var selectedRows = $("#dg").datagrid("getSelections");
+        if(selectedRows.length<1){
+            $.messager.alert("系统提示","请至少选择一条要编辑的数据");
+            return;
+        }
+        var strIds=[];
+        for(var i =0;i<selectedRows.length;++i){
+            strIds.push(selectedRows[i].id);
+        }
+        var ids = strIds.join(",");//返回字符串
+        $.messager.confirm("系统提示","您确定要删除这<font color=red>"+selectedRows.length+"</font>条数据吗？",function (r) {
+            if(r){//用户点的确认
+                $.post(
+                    "/admin/link/delete",
+                    {
+                        ids:ids
+                    },
+                    function (result) {
+                        if(result.success){
+                            $.messager.alert("系统提示","删除成功！");
+                            $("#dg").datagrid("reload");
+                        }else{
+                            $.messager.alert("系统提示","删除失败，请联系管理员！");
+                        }
+                    },
+                    "json"//指定格式为json
+                )
             }
         });
     }
-
+    function saveLink() {
+        $("#fm").form("submit",{
+            url:url,
+            onSubmit:function () {
+                return $(this).form("validate");//执行validate方法
+            },
+            success:function (result) {
+                var result= eval('('+result+')');//转换为json对象
+                if(result.success){
+                    $.messager.alert("系统提示","保存成功");
+                    resetValue();
+                    $("#dlg").dialog("close");
+                    $("#dg").datagrid("reload");
+                }
+            }
+        })
+    }
+    function closeLink() {
+        resetValue();
+        $("#dlg").dialog("close");
+    }
     function resetValue(){
         $("#name").val("");
-        $("#title").val("");
-        $("#imageFile").val("");
-        $("#yes").prop("checked",true);
-        CKEDITOR.instances.content.setData("");
+        $("#url").val("");
+        $("#sort").val("");
     }
+
 </script>
 </html>

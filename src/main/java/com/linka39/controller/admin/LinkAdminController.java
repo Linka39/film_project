@@ -32,13 +32,40 @@ public class LinkAdminController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("list")
+    @RequestMapping("/list")
     public Map<String,Object> list(@RequestParam(value = "page",required = false)Integer page,@RequestParam(value = "rows",required = false)Integer rows)throws Exception{
         List<Link> linkList = linkService.list(page-1,rows);
         Long total = linkService.getCount();
         Map<String,Object> resultMap = new HashMap<>();
         resultMap.put("rows",linkList);
         resultMap.put("total",total);
+        return resultMap;
+    }
+    /**
+     * 添加或者修改 友情链接
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/save")
+    public Map<String,Object> save(Link link)throws Exception{
+        Map<String,Object> resultMap = new HashMap<>();
+        linkService.save(link);
+        resultMap.put("success",true);
+        return resultMap;
+    }
+    /**
+     * 删除 友情链接
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/delete")
+    public Map<String,Object> delete(@RequestParam("ids") String ids)throws Exception{
+        String idsStr[] = ids.split(",");
+        Map<String,Object> resultMap = new HashMap<>();
+        for(String each:idsStr){
+            linkService.delete(Integer.parseInt(each));
+        }
+        resultMap.put("success",true);
         return resultMap;
     }
 }
