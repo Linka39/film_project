@@ -41,27 +41,27 @@ public class WebSiteAdminController {
      * 添加或者修改 友情链接
      * @return
      * @throws Exception
-     *//*
+     */
     @RequestMapping("/save")
-    public Map<String,Object> save(Link link)throws Exception{
+    public Map<String,Object> save(WebSite webSite)throws Exception{
         Map<String,Object> resultMap = new HashMap<>();
-        linkService.save(link);
+        webSiteService.save(webSite);
         resultMap.put("success",true);
         return resultMap;
     }
-    *//**
+    /**
      * 删除 友情链接
      * @return
      * @throws Exception
-     *//*
+     */
     @RequestMapping("/delete")
     public Map<String,Object> delete(@RequestParam("ids") String ids)throws Exception{
         String idsStr[] = ids.split(",");
         Map<String,Object> resultMap = new HashMap<>();
         for(String each:idsStr){
-            linkService.delete(Integer.parseInt(each));
+            webSiteService.delete(Integer.parseInt(each));
         }
         resultMap.put("success",true);
         return resultMap;
-    }*/
+    }
 }

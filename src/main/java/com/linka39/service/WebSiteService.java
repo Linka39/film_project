@@ -14,5 +14,12 @@ public interface WebSiteService {
     //获取总记录数
     public Long getCount(WebSite webSite);
 
-
+    /**
+     * 添加或者修改友情链接
+     */
+    public void save(WebSite webSite);
+    /**
+     * 删除友情链接
+     */
+    public void delete(Integer id);
 }

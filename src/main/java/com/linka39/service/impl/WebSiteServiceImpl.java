@@ -25,6 +25,17 @@ import java.util.List;
 public class WebSiteServiceImpl implements WebSiteService {
  @Resource//注入
     private WebSiteRepository webSiteRepository;
+
+    @Override
+    public void save(WebSite webSite) {
+        webSiteRepository.save(webSite);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        webSiteRepository.deleteById(id);
+    }
+
     @Override
     public List<WebSite> list(WebSite webSite, Integer page, Integer pageSize) {
         //PageRequest不需要 new ，内部调用构造器

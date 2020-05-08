@@ -38,21 +38,15 @@
     <form id="fm" method="post">
         <table cellspacing="8px">
             <tr>
-                <td>友情链接名称：</td>
+                <td>电影网站名称：</td>
                 <td>
                     <input type="text" id="name" name="name" class="easyui-validatebox" required="true"/>
                 </td>
             </tr>
             <tr>
-                <td>友情链接地址：</td>
+                <td>电影网站地址：</td>
                 <td>
                     <input type="text" id="url" name="url" class="easyui-validatebox" validType="url" required="true"/>
-                </td>
-            </tr>
-            <tr>
-                <td>友情链接排序：</td>
-                <td>
-                    <input type="text" id="sort" name="sort" class="easyui-numberbox" required="true" style="width: 60px"/>&nbsp;(序号从小到大排序)
                 </td>
             </tr>
         </table>
@@ -73,8 +67,8 @@
     }
     function openWebSiteAddDialog() {
         //调用dialog内的方法
-        $("#dlg").dialog("open").dialog("setTitle","添加友情链接信息");
-        url="/admin/WebSite/save";
+        $("#dlg").dialog("open").dialog("setTitle","添加网站信息");
+        url="/admin/website/save";
     }
     function openWebSiteModifyDialog() {
         var selectedRows = $("#dg").datagrid("getSelections");
@@ -84,8 +78,8 @@
         }
         var row = selectedRows[0];
         $("#fm").form("load",row)//根据row里面的属性值自动匹配表单name
-        $("#dlg").dialog("open").dialog("setTitle","添加友情链接信息");
-        url="/admin/WebSite/save?id="+row.id;
+        $("#dlg").dialog("open").dialog("setTitle","添加网站信息");
+        url="/admin/website/save?id="+row.id;
     }
     function deleteWebSite() {
         var selectedRows = $("#dg").datagrid("getSelections");
@@ -101,7 +95,7 @@
         $.messager.confirm("系统提示","您确定要删除这<font color=red>"+selectedRows.length+"</font>条数据吗？",function (r) {
             if(r){//用户点的确认
                 $.post(
-                    "/admin/WebSite/delete",
+                    "/admin/website/delete",
                     {
                         ids:ids
                     },
