@@ -1,5 +1,7 @@
 package com.linka39.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -73,6 +75,7 @@ public class Film {
         this.hot = hot;
     }
 
+    @JsonSerialize(using = CustomDateTimeSerializer.class) //获取数据时 json序列化
     public Date getPublishDate() {
         return publishDate;
     }
