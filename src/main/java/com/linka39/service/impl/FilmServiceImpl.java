@@ -17,6 +17,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 电影Service接口实现类
@@ -51,6 +52,16 @@ public class FilmServiceImpl implements FilmService {
             }
         }, pageable);//内部已经封装的分页方法
         return pageFilm.getContent();
+    }
+
+    @Override
+    public Optional<Film> findById(Integer id) {
+       return filmRepository.findById(id);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        filmRepository.deleteById(id);
     }
 
     @Override

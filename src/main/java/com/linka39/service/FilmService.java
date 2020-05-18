@@ -3,6 +3,7 @@ package com.linka39.service;
 import com.linka39.entity.Film;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 电影Service接口
@@ -18,4 +19,10 @@ public interface FilmService {
 
     //获取总记录数
     public Long getCount(Film film);
+
+    //根据id查找实体
+    public Optional<Film> findById(Integer id);
+
+    //删除信息
+    public void delete(Integer id);
 }

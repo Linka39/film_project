@@ -1,8 +1,6 @@
 package com.linka39.controller.admin;
 
-import ch.qos.logback.core.util.FileUtil;
 import com.linka39.entity.Film;
-import com.linka39.entity.WebSite;
 import com.linka39.service.FilmService;
 import com.linka39.util.DateUtil;
 import org.apache.commons.io.FileUtils;
@@ -14,10 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 电影控制层
@@ -86,5 +81,32 @@ public class FilmAdminController {
         resultMap.put("rows",filmList);
         resultMap.put("total",total);
         return resultMap;
+    }
+
+    /**
+     * 删除 电影
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/delete")
+    public Map<String,Object> delete(@RequestParam("ids") String ids)throws Exception{
+        String idsStr[] = ids.split(",");
+        Map<String,Object> resultMap = new HashMap<>();
+        for(String each:idsStr){
+            filmService.delete(Integer.parseInt(each));
+        }
+        resultMap.put("success",true);
+        return resultMap;
+    }
+
+    /**
+     * 根据id查找实体
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/findById")
+    public Optional<Film> findById(Integer id)throws Exception{
+       return filmService.findById(id);
     }
 }
