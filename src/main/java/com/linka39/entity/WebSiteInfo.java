@@ -1,42 +1,52 @@
 package com.linka39.entity;
 
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import javax.persistence.*;
-import java.util.Date;
-import java.util.StringJoiner;
-
 /**
- * 网站动态更新电影信息
+ * 网站动态更新电影信息实体
+ * @author Administrator
+ *
  */
 @Entity
-@Table(name="t_info")  //后会自动生成t_link表
+@Table(name="t_info")
 public class WebSiteInfo {
-    @Id     //设置id为主键
-    @GeneratedValue   //设置自增
-    private  Integer id;  //编号
 
-    @ManyToOne      //设置多对一关键
-    @JoinColumn(name = "filmId")  //增加外键
-    private Film film;//电影
+    @Id
+    @GeneratedValue
+    private Integer Id; // 编号
 
-    @ManyToOne      //设置多对一关键
-    @JoinColumn(name = "webSiteId")  //增加外键
-    private WebSite webSite;
+    @ManyToOne
+    @JoinColumn(name="filmId")
+    private Film film; // 电影
 
-    @Column(length =1000)
-    private String info;        //信息
-    @Column(length =500)
-    private String url;     //网址
+    @ManyToOne
+    @JoinColumn(name="webSiteId")
+    private WebSite webSite; // 网站
 
-    private Date publishDate;//发出日期
+    @Column(length=1000)
+    private String info; // 信息
+
+    @Column(length=500)
+    private String url; // 具体网址
+
+    private Date publishDate; // 发布日期
 
     public Integer getId() {
-        return id;
+        return Id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.Id = id;
     }
 
     public Film getFilm() {
@@ -60,7 +70,7 @@ public class WebSiteInfo {
     }
 
     public void setInfo(String info) {
-        info = info;
+        this.info = info;
     }
 
     public String getUrl() {
@@ -79,4 +89,6 @@ public class WebSiteInfo {
     public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
     }
+
+
 }

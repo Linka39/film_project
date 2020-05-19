@@ -21,10 +21,12 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
- * 电影动态信息Service接口实现类
+ * 电影动态信息Service实现类
+ * @author Administrator
+ *
  */
-@Service("WebSiteInfoService")//实现业务层逻辑 bean类的装填
-public class WebSiteInfoServiceImpl implements WebSiteInfoService {
+@Service("webSiteInfoService")
+public class WebSiteInfoServiceImpl implements WebSiteInfoService{
 
     @Resource
     private WebSiteInfoRepository webSiteInfoRepository;
@@ -43,7 +45,6 @@ public class WebSiteInfoServiceImpl implements WebSiteInfoService {
     public List<WebSiteInfo> list(WebSiteInfo webSiteInfo, Integer page, Integer pageSize) {
         Pageable pageable=PageRequest.of(page, pageSize,Sort.Direction.DESC,"publishDate");
         Page<WebSiteInfo> pageWebSite=webSiteInfoRepository.findAll(new Specification<WebSiteInfo>() {
-
             @Override
             public Predicate toPredicate(Root<WebSiteInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Predicate predicate=cb.conjunction();
@@ -75,5 +76,15 @@ public class WebSiteInfoServiceImpl implements WebSiteInfoService {
         });
         return count;
     }
+
+/*	@Override
+	public List<WebSiteInfo> getByFilmId(Integer filmId) {
+		return webSiteInfoRepository.getByFilmId(filmId);
+	}
+
+	@Override
+	public List<WebSiteInfo> getByWebSiteId(Integer webSiteId) {
+		return webSiteInfoRepository.getByWebSiteId(webSiteId);
+	}*/
 
 }

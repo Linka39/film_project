@@ -31,10 +31,10 @@ public class WebSiteInfoAdminController {
      */
     @RequestMapping("/list")
     public Map<String,Object> list(WebSiteInfo webSiteInfo, @RequestParam(value = "page",required = false)Integer page, @RequestParam(value = "rows",required = false)Integer rows)throws Exception{
-        List<WebSiteInfo> webSiteList  = webSiteInfoService.list(webSiteInfo,page,rows);
+        List<WebSiteInfo> webSiteInfoList  = webSiteInfoService.list(webSiteInfo,page,rows);
         Long total = webSiteInfoService.getCount(webSiteInfo);
         Map<String,Object> resultMap = new HashMap<>();
-        resultMap.put("rows",webSiteList);
+        resultMap.put("rows",webSiteInfoList);
         resultMap.put("total",total);
         return resultMap;
     }
