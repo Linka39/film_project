@@ -1,6 +1,7 @@
 package com.linka39.controller.admin;
 
 import com.linka39.entity.WebSite;
+import com.linka39.service.WebSiteInfoService;
 import com.linka39.service.WebSiteService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,8 @@ import java.util.Map;
 public class WebSiteAdminController {
     @Resource
     private WebSiteService webSiteService;
+    @Resource//一个注解只对应一个变量
+    private WebSiteInfoService webSiteInfoService;
 
     /**
      * 分页查询_收录电影网址
@@ -58,10 +61,24 @@ public class WebSiteAdminController {
     public Map<String,Object> delete(@RequestParam("ids") String ids)throws Exception{
         String idsStr[] = ids.split(",");
         Map<String,Object> resultMap = new HashMap<>();
+        boolean flag = true;
+        Integer errorId = null;
         for(String each:idsStr){
-            webSiteService.delete(Integer.parseInt(each));
+            Integer tempId = Integer.parseInt(each);
+            if(webSiteInfoService.getByWebSiteId(tempId).size()>0){
+                flag=false;
+                errorId = tempId;
+                break;
+            }else{
+                webSiteService.delete(Integer.parseInt(each));
+            }
         }
-        resultMap.put("success",true);
+        if(flag){
+            resultMap.put("success",true);
+        }else{
+            resultMap.put("success",false);
+            resultMap.put("errorInfo","电影动态信息中存在网站信息，ID("+errorId+")不可删除");
+        }
         return resultMap;
     }
 }

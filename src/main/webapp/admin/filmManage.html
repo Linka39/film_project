@@ -80,7 +80,7 @@
                             $.messager.alert("系统提示","删除成功！");
                             $("#dg").datagrid("reload");
                         }else{
-                            $.messager.alert("系统提示","删除失败，请联系管理员！");
+                            $.messager.alert("系统提示",result.errorInfo);
                         }
                     },
                     "json"//指定格式为json

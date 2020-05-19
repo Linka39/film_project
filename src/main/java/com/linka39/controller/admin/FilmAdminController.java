@@ -1,7 +1,9 @@
 package com.linka39.controller.admin;
 
 import com.linka39.entity.Film;
+import com.linka39.entity.WebSiteInfo;
 import com.linka39.service.FilmService;
+import com.linka39.service.WebSiteInfoService;
 import com.linka39.util.DateUtil;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +25,8 @@ public class FilmAdminController {
 
     @Resource
     private FilmService filmService;
+    @Resource
+    private WebSiteInfoService webSiteInfoService;
 
     @Value("${imageFilePath}")
     //配置文件注入
@@ -92,10 +96,26 @@ public class FilmAdminController {
     public Map<String,Object> delete(@RequestParam("ids") String ids)throws Exception{
         String idsStr[] = ids.split(",");
         Map<String,Object> resultMap = new HashMap<>();
+        boolean flag = true;
+        Integer errorId = null;
         for(String each:idsStr){
-            filmService.delete(Integer.parseInt(each));
+            Integer filmid = Integer.parseInt(each);
+            List<WebSiteInfo>  tempList = webSiteInfoService.getByFilmId(filmid);
+            if(tempList.size()>0){
+                flag=false;
+                errorId = filmid;
+                break;
+            }else{
+                filmService.delete(filmid);
+            }
         }
-        resultMap.put("success",true);
+        if(flag){
+            resultMap.put("success",true);
+        }else{
+            resultMap.put("success",false);
+            resultMap.put("errorInfo","电影动态信息中存在此电影信息，ID("+errorId+")不可删除");
+        }
+
         return resultMap;
     }
 

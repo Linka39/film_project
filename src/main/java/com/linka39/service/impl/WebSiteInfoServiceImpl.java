@@ -77,7 +77,7 @@ public class WebSiteInfoServiceImpl implements WebSiteInfoService{
         return count;
     }
 
-/*	@Override
+	@Override
 	public List<WebSiteInfo> getByFilmId(Integer filmId) {
 		return webSiteInfoRepository.getByFilmId(filmId);
 	}
@@ -85,6 +85,6 @@ public class WebSiteInfoServiceImpl implements WebSiteInfoService{
 	@Override
 	public List<WebSiteInfo> getByWebSiteId(Integer webSiteId) {
 		return webSiteInfoRepository.getByWebSiteId(webSiteId);
-	}*/
+	}
 
 }
