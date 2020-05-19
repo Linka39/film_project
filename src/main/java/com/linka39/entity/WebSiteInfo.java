@@ -1,5 +1,7 @@
 package com.linka39.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.StringJoiner;
@@ -23,7 +25,7 @@ public class WebSiteInfo {
     private WebSite webSite;
 
     @Column(length =1000)
-    private String Info;        //信息
+    private String info;        //信息
     @Column(length =500)
     private String url;     //网址
 
@@ -54,11 +56,11 @@ public class WebSiteInfo {
     }
 
     public String getInfo() {
-        return Info;
+        return info;
     }
 
     public void setInfo(String info) {
-        Info = info;
+        info = info;
     }
 
     public String getUrl() {
@@ -69,6 +71,7 @@ public class WebSiteInfo {
         this.url = url;
     }
 
+    @JsonSerialize(using=CustomDateSerializer.class)
     public Date getPublishDate() {
         return publishDate;
     }
