@@ -23,7 +23,7 @@ public class WebSiteInfo {
 
     @Id
     @GeneratedValue
-    private Integer Id; // 编号
+    private Integer id; // 编号
 
     @ManyToOne
     @JoinColumn(name="filmId")
@@ -42,11 +42,11 @@ public class WebSiteInfo {
     private Date publishDate; // 发布日期
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.Id = id;
+        this.id = id;
     }
 
     public Film getFilm() {

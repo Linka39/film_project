@@ -1,8 +1,10 @@
 package com.linka39.controller.admin;
 
+import com.linka39.entity.Film;
 import com.linka39.entity.WebSite;
 import com.linka39.service.WebSiteInfoService;
 import com.linka39.service.WebSiteService;
+import com.linka39.util.StringUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +42,7 @@ public class WebSiteAdminController {
         resultMap.put("total",total);
         return resultMap;
     }
-/*    *//**
+     /**
      * 添加或者修改 友情链接
      * @return
      * @throws Exception
@@ -80,5 +82,16 @@ public class WebSiteAdminController {
             resultMap.put("errorInfo","电影动态信息中存在网站信息，ID("+errorId+")不可删除");
         }
         return resultMap;
+    }
+
+    @RequestMapping("/comboList")
+    //会自动转义为返回的JsonArray格式,q为自动传的
+    public List<WebSite> comboList(String q) throws Exception{
+        if(StringUtil.isEmpty(q)){
+            return null;
+        }
+        WebSite webSite = new WebSite();
+        webSite.setUrl(q);
+        return webSiteService.list(webSite,1,30);//最多查询30条
     }
 }

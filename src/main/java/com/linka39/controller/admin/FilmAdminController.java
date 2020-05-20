@@ -5,6 +5,7 @@ import com.linka39.entity.WebSiteInfo;
 import com.linka39.service.FilmService;
 import com.linka39.service.WebSiteInfoService;
 import com.linka39.util.DateUtil;
+import com.linka39.util.StringUtil;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -115,7 +116,6 @@ public class FilmAdminController {
             resultMap.put("success",false);
             resultMap.put("errorInfo","电影动态信息中存在此电影信息，ID("+errorId+")不可删除");
         }
-
         return resultMap;
     }
 
@@ -128,5 +128,22 @@ public class FilmAdminController {
     @RequestMapping("/findById")
     public Optional<Film> findById(Integer id)throws Exception{
        return filmService.findById(id);
+    }
+
+    /**
+     * 下拉框模糊查询用到
+     * @param q
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/comboList")
+    //会自动转义为返回的JsonArray格式,q为自动传的
+    public List<Film> comboList(String q) throws Exception{
+        if(StringUtil.isEmpty(q)){
+            return null;
+        }
+        Film film = new Film();
+        film.setName(q);
+        return filmService.list(film,1,10);//最多查询30条
     }
 }

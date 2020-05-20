@@ -2,12 +2,12 @@ package com.linka39.controller.admin;
 
 import com.linka39.entity.WebSiteInfo;
 import com.linka39.service.WebSiteInfoService;
-import com.linka39.service.WebSiteService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,30 +39,31 @@ public class WebSiteInfoAdminController {
         return resultMap;
     }
  /*   *//**
-     * 添加或者修改 友情链接
+     * 添加或者修改
      * @return
      * @throws Exception
-     *//*
+     */
     @RequestMapping("/save")
     public Map<String,Object> save(WebSiteInfo webSiteInfo)throws Exception{
+        webSiteInfo.setPublishDate(new Date());
         Map<String,Object> resultMap = new HashMap<>();
-        webSiteService.save(webSiteInfo);
+        webSiteInfoService.save(webSiteInfo);
         resultMap.put("success",true);
         return resultMap;
     }
-    *//**
-     * 删除 友情链接
+    /**
+     * 删除
      * @return
      * @throws Exception
-     *//*
+     */
     @RequestMapping("/delete")
     public Map<String,Object> delete(@RequestParam("ids") String ids)throws Exception{
         String idsStr[] = ids.split(",");
         Map<String,Object> resultMap = new HashMap<>();
         for(String each:idsStr){
-            webSiteService.delete(Integer.parseInt(each));
+            webSiteInfoService.delete(Integer.parseInt(each));
         }
         resultMap.put("success",true);
         return resultMap;
-    }*/
+    }
 }

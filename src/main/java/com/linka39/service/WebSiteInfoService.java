@@ -34,5 +34,13 @@ public interface WebSiteInfoService {
 	 */
 	public List<WebSiteInfo> getByWebSiteId(Integer webSiteId);
 
+    /**
+     * 添加或者修改网站动态信息
+     */
+    public void save(WebSiteInfo webSiteInfo);
+    /**
+     * 删除网站动态信息
+     */
+    public void delete(Integer id);
 
 }

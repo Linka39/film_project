@@ -31,19 +31,19 @@ public class WebSiteInfoServiceImpl implements WebSiteInfoService{
     @Resource
     private WebSiteInfoRepository webSiteInfoRepository;
 
-/*    @Override
-    public void save(WebSite webSite) {
-        webSiteInfoRepository.save(webSite);
+    @Override
+    public void save(WebSiteInfo webSiteInfo) {
+        webSiteInfoRepository.save(webSiteInfo);
     }
 
     @Override
     public void delete(Integer id) {
         webSiteInfoRepository.deleteById(id);
-    }*/
+    }
 
     @Override
     public List<WebSiteInfo> list(WebSiteInfo webSiteInfo, Integer page, Integer pageSize) {
-        Pageable pageable=PageRequest.of(page, pageSize,Sort.Direction.DESC,"publishDate");
+        Pageable pageable= PageRequest.of(page-1, pageSize,Sort.Direction.DESC,"publishDate");
         Page<WebSiteInfo> pageWebSite=webSiteInfoRepository.findAll(new Specification<WebSiteInfo>() {
             @Override
             public Predicate toPredicate(Root<WebSiteInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
