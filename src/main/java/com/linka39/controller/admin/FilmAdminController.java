@@ -132,18 +132,26 @@ public class FilmAdminController {
 
     /**
      * 下拉框模糊查询用到
-     * @param q
+     * @param
      * @return
      * @throws Exception
      */
     @RequestMapping("/comboList")
     //会自动转义为返回的JsonArray格式,q为自动传的
+    /*public List<Film> comboList() throws Exception{
+        List<Film> filmList = filmService.listAll();
+        if(filmList.size()>0){
+            return filmList;
+        }else{
+            return null;
+        }
+    }*/
     public List<Film> comboList(String q) throws Exception{
         if(StringUtil.isEmpty(q)){
             return null;
         }
         Film film = new Film();
         film.setName(q);
-        return filmService.list(film,1,10);//最多查询30条
+        return filmService.list(film,1,30);//最多查询30条
     }
 }

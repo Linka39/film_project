@@ -33,14 +33,14 @@
         <a href="javascript:searcInfo()" class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a>
     </div>
 </div>
-<div id="dlg" class="easyui-dialog" style="width: 500px;height:200px;padding: 10px 20px"
+<div id="dlg" class="easyui-dialog" style="width: 500px;height:240px;padding: 10px 20px"
      closed="true" buttons="#dlg-buttons">
     <form id="fm" method="post">
         <table cellspacing="8px">
             <tr>
                 <td>电影名称：</td>
                 <td>
-                    <input type="text" id="film" name="film.id" size="24" class="easyui-combobox" required="true" panelHeight="auto"/>
+                    <input type="text" id="film" name="film.id" size="24" class="easyui-combobox" required="true" panelHeight="auto" onHidePanel="checkValue_onHidePanel"/>
                 </td>
             </tr>
             <tr>
@@ -72,6 +72,18 @@
 <script type="text/javascript">
 
     var url;
+
+    function checkValue_onHidePanel () {
+        var _options = $(this).combobox('options');
+        var _data = $(this).combobox('getData');
+        var _values = $(this).combobox('getValues');
+        var values = '';
+        for (var i = 0; i < _data.length; i++) {
+            if (_values.indexOf(_data[i][_options.valueField]) <0) {
+                $(this).combobox('setValues', values);
+            }
+        }
+    }
     function saveLink() {
         $("#fm").form("submit",{
             url:url,
@@ -147,23 +159,24 @@
                 )
             }
         });
-        $(document).ready(function () {
-            $('#film').combobox({
-                mode:'remote',//设置模式为远程加载
-                url:'/admin/film/comboList',
-                valueField:'id',//指定获取的key值
-                textField:'name',//指定显示的属性
-                delay:100//设置输入延迟 0.1s
-            });
-            $('#webSite').combobox({
-                mode:'remote',//设置模式为远程加载
-                url:'/admin/website/comboList',
-                valueField:'id',//指定获取的key值
-                textField:'url',//指定显示的属性
-                delay:100//设置输入延迟 0.1s
-            });
-        })
+
     }
+    $(document).ready(function () {
+        $('#film').combobox({
+            mode:'remote',//设置模式为远程加载
+            url:'/admin/film/comboList',
+            valueField:'id',//指定获取的key值
+            textField:'name',//指定显示的属性
+            delay:100//设置输入延迟 0.1s
+        });
+        $('#webSite').combobox({
+            mode:'remote',//设置模式为远程加载
+            url:'/admin/website/comboList',
+            valueField:'id',//指定获取的key值
+            textField:'url',//指定显示的属性
+            delay:100//设置输入延迟 0.1s
+        });
+    })
 
 </script>
 </html>

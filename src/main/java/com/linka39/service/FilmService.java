@@ -17,6 +17,9 @@ public interface FilmService {
     //分页查询收录电影信息
     public List<Film> list(Film film, Integer page, Integer pageSize);
 
+    //查询收录电影信息
+    public List<Film> listAll();
+
     //获取总记录数
     public Long getCount(Film film);
 

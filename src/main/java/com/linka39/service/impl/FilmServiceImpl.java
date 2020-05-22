@@ -32,6 +32,11 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
+    public List<Film> listAll() {
+        return filmRepository.findAll();
+    }
+
+    @Override
     public List<Film> list(Film film, Integer page, Integer pageSize) {
         //PageRequest不需要 new ，内部调用构造器
         Pageable pageable= PageRequest.of(page-1,pageSize, Sort.Direction.DESC,"publishDate");
