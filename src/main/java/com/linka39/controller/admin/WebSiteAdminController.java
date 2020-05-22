@@ -2,6 +2,7 @@ package com.linka39.controller.admin;
 
 import com.linka39.entity.Film;
 import com.linka39.entity.WebSite;
+import com.linka39.run.StartupRunner;
 import com.linka39.service.WebSiteInfoService;
 import com.linka39.service.WebSiteService;
 import com.linka39.util.StringUtil;
@@ -26,6 +27,8 @@ public class WebSiteAdminController {
     @Resource//一个注解只对应一个变量
     private WebSiteInfoService webSiteInfoService;
 
+    @Resource
+    private StartupRunner startupRunner;
     /**
      * 分页查询_收录电影网址
      * @param page
@@ -51,6 +54,7 @@ public class WebSiteAdminController {
     public Map<String,Object> save(WebSite webSite)throws Exception{
         Map<String,Object> resultMap = new HashMap<>();
         webSiteService.save(webSite);
+        startupRunner.loadData();
         resultMap.put("success",true);
         return resultMap;
     }
@@ -81,6 +85,7 @@ public class WebSiteAdminController {
             resultMap.put("success",false);
             resultMap.put("errorInfo","电影动态信息中存在网站信息，ID("+errorId+")不可删除");
         }
+        startupRunner.loadData();
         return resultMap;
     }
 

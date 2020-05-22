@@ -2,6 +2,7 @@ package com.linka39.controller.admin;
 
 import com.linka39.entity.Film;
 import com.linka39.entity.Link;
+import com.linka39.run.StartupRunner;
 import com.linka39.service.FilmService;
 import com.linka39.service.LinkService;
 
@@ -25,6 +26,8 @@ public class LinkAdminController {
     @Resource
     private LinkService linkService;
 
+    @Resource
+    private StartupRunner startupRunner;
     /**
      * 分页查询友情链接
      * @param page
@@ -50,6 +53,7 @@ public class LinkAdminController {
     public Map<String,Object> save(Link link)throws Exception{
         Map<String,Object> resultMap = new HashMap<>();
         linkService.save(link);
+        startupRunner.loadData();
         resultMap.put("success",true);
         return resultMap;
     }
@@ -65,6 +69,7 @@ public class LinkAdminController {
         for(String each:idsStr){
             linkService.delete(Integer.parseInt(each));
         }
+        startupRunner.loadData();
         resultMap.put("success",true);
         return resultMap;
     }

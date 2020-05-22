@@ -15,6 +15,14 @@ public interface WebSiteService {
     public Long getCount(WebSite webSite);
 
     /**
+     * 获取最新收录网址
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public List<WebSite> newestList(Integer page, Integer pageSize);
+
+    /**
      * 添加或者修改友情链接
      */
     public void save(WebSite webSite);

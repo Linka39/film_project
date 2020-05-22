@@ -1,6 +1,7 @@
 package com.linka39.controller.admin;
 
 import com.linka39.entity.WebSiteInfo;
+import com.linka39.run.StartupRunner;
 import com.linka39.service.WebSiteInfoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,9 @@ import java.util.Map;
 public class WebSiteInfoAdminController {
     @Resource
     private WebSiteInfoService webSiteInfoService;
+
+    @Resource
+    private StartupRunner startupRunner;
 
     /**
      * 分页查询_收录电影网址
@@ -49,6 +53,7 @@ public class WebSiteInfoAdminController {
         Map<String,Object> resultMap = new HashMap<>();
         webSiteInfoService.save(webSiteInfo);
         resultMap.put("success",true);
+        startupRunner.loadData();
         return resultMap;
     }
     /**
@@ -64,6 +69,7 @@ public class WebSiteInfoAdminController {
             webSiteInfoService.delete(Integer.parseInt(each));
         }
         resultMap.put("success",true);
+        startupRunner.loadData();
         return resultMap;
     }
 }

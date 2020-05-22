@@ -2,6 +2,7 @@ package com.linka39.controller.admin;
 
 import com.linka39.entity.Film;
 import com.linka39.entity.WebSiteInfo;
+import com.linka39.run.StartupRunner;
 import com.linka39.service.FilmService;
 import com.linka39.service.WebSiteInfoService;
 import com.linka39.util.DateUtil;
@@ -33,6 +34,9 @@ public class FilmAdminController {
     //配置文件注入
     private String imageFilePath;
 
+    @Resource
+    private StartupRunner startupRunner;//涉及数据库修改的都需要用到
+
     /**
      * 添加或修改电影信息
      * @param film
@@ -53,6 +57,7 @@ public class FilmAdminController {
         film.setPublishDate(new Date());
         Map<String,Object> resultMap = new HashMap<>();
         filmService.save(film);
+        startupRunner.loadData();
         resultMap.put("success",true);
         return resultMap;
     }
@@ -108,6 +113,7 @@ public class FilmAdminController {
                 break;
             }else{
                 filmService.delete(filmid);
+                startupRunner.loadData();
             }
         }
         if(flag){

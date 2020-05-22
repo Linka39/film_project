@@ -50,6 +50,9 @@ public class FilmServiceImpl implements FilmService {
                     if(StringUtil.isNotEmpty(film.getName())){
                         predicate.getExpressions().add(cb.like(root.get("name"),"%"+film.getName().trim()+"%")//加入模糊查询
                         );//获取表达式predicate
+                    }if(film.getHot()!=null&&film.getHot()==1){
+                        predicate.getExpressions().add(cb.equal(root.get("hot"),1)//加入模糊查询
+                        );//获取表达式predicate
                     }
                     return predicate;//返回构造器
                 }

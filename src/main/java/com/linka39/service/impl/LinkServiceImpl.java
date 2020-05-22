@@ -17,6 +17,12 @@ import java.util.List;
 public class LinkServiceImpl implements LinkService {
     @Resource
     private LinkRepository linkRepository;
+
+    @Override
+    public List<Link> listAll() {
+        return linkRepository.findAll();
+    }
+
     @Override
     public List<Link> list(Integer page, Integer pageSize) {
         //PageRequest不需要 new ，内部调用构造器
