@@ -15,6 +15,7 @@ spring:
     show-sql: true
   thymeleaf:
     cache: false
+    mode: LEGACYHTML5
 
 imageFilePath: E://my_project/film_project/src/main/webapp/static/filmImage/
 
