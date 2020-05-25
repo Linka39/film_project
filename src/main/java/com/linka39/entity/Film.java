@@ -3,6 +3,7 @@ package com.linka39.entity;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 /**
@@ -14,6 +15,8 @@ public class Film {
     @Id     //设置id为主键
     @GeneratedValue   //设置自增
     private  Integer id;  //编号
+
+    @NotEmpty(message = "请输入您要搜索的电影")
     @Column(length =200)
     private String name;    //电影名称
     @Column(length =500)

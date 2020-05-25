@@ -16,6 +16,8 @@ public class IndexController {
     public ModelAndView root(){
         ModelAndView mav = new ModelAndView();
         mav.addObject("title","首页");
+        mav.addObject("mainPage","film/indexFilm");
+        mav.addObject("mainPageKey","#f");
         mav.setViewName("index");   //thymeleaf模板引擎默认返回的是.html文件
         return mav;
     }

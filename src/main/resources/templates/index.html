@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
-<html xmlns:th="http://www.thymeleaf.org">
 <!--xmlns ns是命名控件，th是之后每个标签使用其命名空间时的缩写-->
 <head>
     <meta charset="UTF-8"></meta>
@@ -10,6 +9,19 @@
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="/static/css/film.css" />
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        //页面加载完后执行，thymleaf中js执行格式  //![CDATA[]]为xml语法，在其内的所有内容都会被解析器忽略
+        //注意 window.onLoad与  window.onload不一样
+        window.onload = function(){
+            //功能类似El表达式获取
+            var error = [[${error}]];
+            if(error !=null){
+                alert(error);
+            }
+        }
+        /*]]>*/
+    </script>
 </head>
 <body>
 <div class="container">
@@ -25,6 +37,8 @@
 	<div class="row">
 
 		<div class="col-md-8">
+            <div th:include="${mainPage}::${mainPageKey}">
+            </div>
 		</div>
 
 		<div class="col-md-4">
