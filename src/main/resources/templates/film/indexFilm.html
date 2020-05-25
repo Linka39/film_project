@@ -8,7 +8,7 @@
         <div class="datas imageDatas">
             <ul class="imageUl">
                 <li class="imageLi" th:each="newestIndexHotFilm:${application.newestIndexHotFilmList}">
-                   <a target="_blank" th:href="'/film'+${newestIndexHotFilm.id}" th:title="${newestIndexHotFilm.name}">
+                   <a target="_blank" th:href="'/film/'+${newestIndexHotFilm.id}" th:title="${newestIndexHotFilm.name}">
                        <img class="indexFilm" th:src="'/static/filmImage/'+${newestIndexHotFilm.imageName}">
                        <p th:text="${newestIndexHotFilm.name}"></p>
                    </a>

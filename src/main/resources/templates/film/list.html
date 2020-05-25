@@ -3,9 +3,9 @@
     <div class="data_list">
         <div class="data_list_title">
             <img src="/static/images/hot_icon.png"/>
-            电影搜索结果（搜索到<font color="red"><strong th:text="${total}"></strong> </font>条结果&nbsp;最多显示32条结果）
+            电影列表
         </div>
-        <div class="datas imageDatas">
+        <div class="datas lImageDatas">
             <ul class="imageUl">
                 <li class="imageLi" th:each="film:${filmList}">
                    <a target="_blank" th:href="'/film/'+${film.id}" th:title="${film.name}">
@@ -16,5 +16,14 @@
             </ul>
         </div>
     </div>
+
+    <div>
+        <nav>
+           <!-- th:utext将其自动转换为html代码-->
+            <ul class="pagination" th:utext="${pageCode}">
+            </ul>
+        </nav>
+    </div>
+
 </div>
 
