@@ -24,6 +24,8 @@ import java.util.Optional;
  */
 @Service("filmService")//实现业务层逻辑 bean类的装填
 public class FilmServiceImpl implements FilmService {
+
+
     @Resource //实现自动扫描装填FilmRepository类
     private FilmRepository filmRepository;
     @Override
@@ -37,9 +39,19 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
+    public Film getLast(Integer id) {
+        return filmRepository.getLast(id);
+    }
+
+    @Override
+    public Film getNext(Integer id) {
+        return filmRepository.getNext(id);
+    }
+
+    @Override
     public List<Film> list(Film film, Integer page, Integer pageSize) {
         //PageRequest不需要 new ，内部调用构造器
-        Pageable pageable= PageRequest.of(page-1,pageSize, Sort.Direction.DESC,"publishDate");
+        Pageable pageable= PageRequest.of(page-1,pageSize, Sort.Direction.ASC,"id");
         Page<Film> pageFilm = filmRepository.findAll(new Specification<Film>() {
             //匿名内部类构造实现
             @Override

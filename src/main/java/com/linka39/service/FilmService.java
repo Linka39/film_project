@@ -28,4 +28,18 @@ public interface FilmService {
 
     //删除信息
     public void delete(Integer id);
+
+    /**
+     * 获取上一个
+     * @param id
+     * @return
+     */
+    public Film getLast(Integer id);
+
+    /**
+     * 获取下一个电影
+     * @param id
+     * @return
+     */
+    public Film getNext(Integer id);
 }

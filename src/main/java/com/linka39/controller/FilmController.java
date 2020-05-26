@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 电影搜索Comtroller类
@@ -74,4 +75,44 @@ public class FilmController {
         return mav;
     }
 
+    /**
+     * 获取电影详情信息
+     * @param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/{id}")
+    public ModelAndView view(@PathVariable(value = "id",required = false)Integer id) throws Exception{
+        ModelAndView mav = new ModelAndView();
+        //获取实体类
+        Film film = filmService.findById(id).get();
+        mav.addObject("film",film);
+        mav.addObject("title",film.getName());
+        mav.addObject("pageCode",this.getUpAndDownPageCode(filmService.getNext(id),filmService.getLast(id)));
+        mav.addObject("mainPage","film/view");
+        mav.addObject("mainPageKey","#f");
+        mav.setViewName("index");
+        return mav;
+    }
+
+    /**
+     * 获取上下篇电影
+     * @param nextfilm
+     * @param lastfilm
+     * @return
+     */
+    private String getUpAndDownPageCode(Film nextfilm,Film lastfilm){
+        StringBuffer pageCode = new StringBuffer();
+        if(lastfilm==null || lastfilm.getId()==null){
+            pageCode.append("<p>上一篇：没有了</p>");
+        }else{
+            pageCode.append("<p>上一篇：<a href='/film/"+lastfilm.getId()+"'>"+lastfilm.getTitle()+"</a></p>");
+        }
+        if(nextfilm==null || nextfilm.getId()==null){
+            pageCode.append("<p>下一篇：没有了</p>");
+        }else{
+            pageCode.append("<p>下一篇：<a href='/film/"+nextfilm.getId()+"'>"+nextfilm.getTitle()+"</a></p>");
+        }
+        return pageCode.toString();
+    }
 }
