@@ -42,4 +42,10 @@ public interface FilmService {
      * @return
      */
     public Film getNext(Integer id);
+    /**
+     * 随机获取n个电影
+     * @param n
+     * @return
+     */
+    public List<Film> randomList(Integer n);
 }

@@ -2,7 +2,9 @@ package com.linka39.controller;
 
 import com.linka39.entity.Film;
 import com.linka39.entity.Link;
+import com.linka39.entity.WebSiteInfo;
 import com.linka39.service.FilmService;
+import com.linka39.service.WebSiteInfoService;
 import com.linka39.util.PageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,8 @@ import java.util.Optional;
 public class FilmController {
     @Resource
     FilmService filmService;
+    @Resource
+    WebSiteInfoService webSiteInfoService;
 
     /**
      * 模糊查询搜索电影
@@ -87,6 +91,8 @@ public class FilmController {
         //获取实体类
         Film film = filmService.findById(id).get();
         mav.addObject("film",film);
+        mav.addObject("randomFilmList",filmService.randomList(8));
+        mav.addObject("webSiteInfoList",webSiteInfoService.getByFilmId(id));
         mav.addObject("title",film.getName());
         mav.addObject("pageCode",this.getUpAndDownPageCode(filmService.getNext(id),filmService.getLast(id)));
         mav.addObject("mainPage","film/view");

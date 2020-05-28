@@ -16,5 +16,52 @@
         </div>
         <div class="film_lastAndNextPage" th:utext="${pageCode}"></div>
     </div>
+
+    <div class="data_list">
+        <div class="data_list_title">
+            <img src="/static/images/list_icon.png" />
+            电影网站动态信息列表
+        </div>
+        <table class="table">
+           <!-- 表头设置-->
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>发布日期</th>
+                    <th>动态信息</th>
+                    <th>来源于</th>
+                </tr>
+            </thead>
+            <tbody>
+            <!--逗号后面字段的是记录索引-->
+                <tr th:each="webSiteInfo,webSiteInfoStat:${webSiteInfoList}">
+                    <th scope="row" th:text="webSiteInfoStat+1"></th>
+                   <!-- MM表示月，区分mm，HH为24小时制,hh为12小时-->
+                    <td th:text="${#dates.format(webSiteInfo.publishDate,'yyyy-MM-dd')}"></td>
+                    <td>
+                        <a target="_blank" th:href="${webSiteInfo.url}" th:text="${webSiteInfo.info}" th:title="${webSiteInfo.info}"></a>
+                    </td>
+                    <td>
+                        <a target="_blank" th:href="${webSiteInfo.webSite.url}" th:title="${webSiteInfo.webSite.name}" th:text="${webSiteInfo.webSite.name}"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="data_list">
+        <div class="data_list_title">
+            <img src="/static/images/guess_icon.png" />
+            你应该喜欢</div>
+        <div class="datas rImageDatas">
+            <ul class="imageUl">
+                <li class="imageLi" th:each="film:${randomFilmList}">
+                    <a target="_blank" th:href="'/film/'+${film.id}" th:title="film.name">
+                        <img th:src="'/static/filmImage/'+${film.imageName}" class="indexFilm">
+                        <p th:text="${film.name}"></p>
+                    </a>
+                </li>
+            </ul>
+        </div>
 </div>
 

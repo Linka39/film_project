@@ -103,4 +103,9 @@ public class FilmServiceImpl implements FilmService {
         });
         return count;
     }
+
+    @Override
+    public List<Film> randomList(Integer n) {
+        return filmRepository.randomList(n);
+    }
 }
