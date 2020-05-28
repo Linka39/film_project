@@ -1,5 +1,6 @@
 package com.linka39.controller.admin;
 
+import com.linka39.entity.Film;
 import com.linka39.entity.WebSiteInfo;
 import com.linka39.run.StartupRunner;
 import com.linka39.service.WebSiteInfoService;
@@ -51,6 +52,7 @@ public class WebSiteInfoAdminController {
     public Map<String,Object> save(WebSiteInfo webSiteInfo)throws Exception{
         webSiteInfo.setPublishDate(new Date());
         Map<String,Object> resultMap = new HashMap<>();
+        Film tempFilm = webSiteInfo.getFilm();
         webSiteInfoService.save(webSiteInfo);
         resultMap.put("success",true);
         startupRunner.loadData();
@@ -70,6 +72,28 @@ public class WebSiteInfoAdminController {
         }
         resultMap.put("success",true);
         startupRunner.loadData();
+        return resultMap;
+    }
+    /**
+     * 校验电影和网址
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/check")
+    public Map<String,Object> check(@RequestParam("s_name") String s_name,@RequestParam("s_url") String s_url)throws Exception{
+        Map<String,Object> resultMap = new HashMap<>();
+        Boolean filmError = false,webSiteError = false;
+       if(webSiteInfoService.getByFilmIdName(s_name)==null)
+           filmError = true;
+       if(webSiteInfoService.getByWebSiteUrl(s_url)==null)
+           webSiteError = true;
+        if(!webSiteError&&!filmError){
+            resultMap.put("success",true);
+        }else{
+            resultMap.put("success",false);
+        }
+        resultMap.put("filmError",filmError);
+        resultMap.put("webSiteError",webSiteError);
         return resultMap;
     }
 }

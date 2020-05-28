@@ -40,7 +40,7 @@
             <tr>
                 <td>电影名称：</td>
                 <td>
-                    <input type="text" id="film" name="film.id" size="24" class="easyui-combobox" required="true" panelHeight="auto" onHidePanel="checkValue_onHidePanel"/>
+                    <input type="text" id="film" name="film.id" size="24" class="easyui-combobox" required="true" panelHeight="auto" />
                 </td>
             </tr>
             <tr>
@@ -72,23 +72,39 @@
 <script type="text/javascript">
 
     var url;
-
-    function checkValue_onHidePanel () {
-        var _options = $(this).combobox('options');
-        var _data = $(this).combobox('getData');
-        var _values = $(this).combobox('getValues');
-        var values = '';
-        for (var i = 0; i < _data.length; i++) {
-            if (_values.indexOf(_data[i][_options.valueField]) <0) {
-                $(this).combobox('setValues', values);
-            }
-        }
+    function checkInfo() {
+        var s_name=$("#film").combobox("getText");
+        var s_url=$("#webSite").combobox("getText");
+        var valid = false;
+        //在ajax语句之中，使用 return true 没有效果
+        $.post("/admin/webSiteInfo/check",
+            {
+                s_name:s_name,
+                s_url:s_url
+            },
+            function (result) {
+                if(!result.success){
+                    var text = "";
+                    if(result.filmError)
+                        text="该电影不存在或未添加<br>";
+                    if(result.webSiteError)
+                        text+="该网址不存在或未添加";
+                    $.messager.alert("系统提示",text);
+                    valid=false;
+                }else{
+                    valid= true;
+                }
+            },
+            "json"//指定格式为json)
+        )
     }
     function saveLink() {
         $("#fm").form("submit",{
             url:url,
             onSubmit:function () {
-                return $(this).form("validate");//执行validate方法
+                if(!$(this).form("validate"))
+                    return false;//执行validate方法
+                checkInfo();
             },
             success:function (result) {
                 var result= eval('('+result+')');//转换为json对象
@@ -126,7 +142,7 @@
     }
 
     function openWebSiteInfoAddDialog() {
-        $("#dlg").dialog("open").dialog("setTitle","添加网站动态信息");
+        $("#dlg").dialog("open").dialog("setTitle","添加网站动态信息<font color='red'>(电影，网址请选择下拉框内的值)</font>");
         url="/admin/webSiteInfo/save";
     }
     function deleteWebSiteInfo() {
@@ -167,7 +183,7 @@
             url:'/admin/film/comboList',
             valueField:'id',//指定获取的key值
             textField:'name',//指定显示的属性
-            delay:100//设置输入延迟 0.1s
+            delay:250//设置输入延迟 0.1s
         });
         $('#webSite').combobox({
             mode:'remote',//设置模式为远程加载

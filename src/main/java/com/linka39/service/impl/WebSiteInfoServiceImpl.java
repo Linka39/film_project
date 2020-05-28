@@ -1,5 +1,6 @@
 package com.linka39.service.impl;
 
+import com.linka39.entity.Film;
 import com.linka39.entity.WebSite;
 import com.linka39.entity.WebSiteInfo;
 import com.linka39.repository.WebSiteInfoRepository;
@@ -87,4 +88,18 @@ public class WebSiteInfoServiceImpl implements WebSiteInfoService{
 		return webSiteInfoRepository.getByWebSiteId(webSiteId);
 	}
 
+    @Override
+    public List<Film> getByFilmName(String s_name) {
+        return webSiteInfoRepository.getByFilmName(s_name);
+    }
+
+    @Override
+    public Integer getByWebSiteUrl(String s_url) {
+        return webSiteInfoRepository.getByWebSiteUrl(s_url);
+    }
+
+    @Override
+    public Integer getByFilmIdName(String s_name) {
+        return webSiteInfoRepository.getByFilmIdName(s_name);
+    }
 }

@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.Query;
  * 电影Respository接口
  */
 //jpa方法，指定实体类型，和组件类型
-    //返回键值对 对象
-public interface FilmRepository extends JpaRepository<Film,Integer>, JpaSpecificationExecutor<Film> {
+    //返回键值对 对象   <实体类,id>
+public interface FilmRepository extends JpaRepository<Film,Integer>,JpaSpecificationExecutor<Film> {
 
     /**
      * 获取上一个电影

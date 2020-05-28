@@ -2,13 +2,7 @@ package com.linka39.entity;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -22,7 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class WebSiteInfo {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; // 编号
 
     @ManyToOne

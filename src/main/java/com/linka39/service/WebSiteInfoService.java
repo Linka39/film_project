@@ -1,5 +1,7 @@
 package com.linka39.service;
 
+import com.linka39.entity.Film;
+import com.linka39.entity.Link;
 import com.linka39.entity.WebSite;
 import com.linka39.entity.WebSiteInfo;
 
@@ -42,5 +44,11 @@ public interface WebSiteInfoService {
      * 删除网站动态信息
      */
     public void delete(Integer id);
+
+    public List<Film> getByFilmName(String s_name);
+
+	public Integer getByFilmIdName(String s_name);
+
+    public Integer getByWebSiteUrl(String s_url);
 
 }
