@@ -35,7 +35,7 @@
             <tbody>
             <!--逗号后面字段的是记录索引-->
                 <tr th:each="webSiteInfo,webSiteInfoStat:${webSiteInfoList}">
-                    <th scope="row" th:text="webSiteInfoStat+1"></th>
+                    <th scope="row" th:text="${webSiteInfoStat.index+1}"></th>
                    <!-- MM表示月，区分mm，HH为24小时制,hh为12小时-->
                     <td th:text="${#dates.format(webSiteInfo.publishDate,'yyyy-MM-dd')}"></td>
                     <td>

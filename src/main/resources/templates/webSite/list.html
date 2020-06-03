@@ -1,0 +1,40 @@
+<meta charset="UTF-8" >
+<div id="f"  xmlns:th="http://www.thymeleaf.org">
+    <div class="data_list">
+        <div class="data_list_title">
+            <img src="/static/images/hot_icon.png"/>
+            收录电影网站列表
+        </div>
+        <table class="table">
+            <!-- 表头设置-->
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>网站名称</th>
+                <th>网站地址</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--逗号后面字段的是记录索引-->
+            <tr th:each="webSite,webSiteStat:${webSiteList}">
+                <th scope="row" th:text="${webSiteStat.index+1}"></th>
+                <!-- MM表示月，区分mm，HH为24小时制,hh为12小时-->
+                <td th:text="${webSite.name}" th:title="${webSite.name}"></td>
+                <td>
+                    <a target="_blank" th:href="${webSite.url}" th:text="${webSite.url}" th:title="${webSite.url}"></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <nav>
+           <!-- th:utext将其自动转换为html代码-->
+            <ul class="pagination" th:utext="${pageCode}">
+            </ul>
+        </nav>
+    </div>
+
+</div>
+

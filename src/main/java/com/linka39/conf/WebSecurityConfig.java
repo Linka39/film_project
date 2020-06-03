@@ -43,7 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //csrf跨域请求过滤，开发时暂时先去除所有请求的过滤
         http.csrf().disable().cors().disable().headers().disable()
-            .authorizeRequests().antMatchers("/", "/static/**","/film/**").permitAll()     //配置不需要权限认证的网页
+                //拦截器中 /*是拦截此文件夹下的文件不包括子文件，/**是包括子文件
+            .authorizeRequests().antMatchers("/", "/static/**","/film/**","/webSiteInfo/**","/webSite/**","/aboutMe").permitAll()     //配置不需要权限认证的网页
             .anyRequest().authenticated()//其他访问路径需要认证
             .and()
             .formLogin()
